@@ -1,0 +1,40 @@
+# ===============================
+# IntelliJ IDEA
+# ===============================
+.idea/
+*.iml
+out/
+
+# ===============================
+# Java / JVM
+# ===============================
+*.class
+*.log
+*.tmp
+*.swp
+
+# ===============================
+# JavaFX libs (safe to ignore if needed)
+# ===============================
+lib/javafx/
+
+# ===============================
+# MySQL connector (optional)
+# ===============================
+# lib/mysql/
+
+# ===============================
+# Configuration files (SENSITIVE)
+# ===============================
+
+# DO NOT PUSH LOCAL PASSWORDS
+config/db.properties
+
+# Allow template version for the teacher
+config/database-template.properties
+
+# ===============================
+# OS-specific
+# ===============================
+.DS_Store
+Thumbs.db
