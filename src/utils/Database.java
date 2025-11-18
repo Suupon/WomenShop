@@ -15,18 +15,28 @@ public class Database {
 
     static {
         try {
-            Properties props = new Properties();
+            // Charge le driver MySQL (sécurisé)
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Charge le fichier de configuration
-            FileInputStream fis = new FileInputStream("config/db.properties");
-            props.load(fis);
+            // Charge les propriétés
+            Properties props = new Properties();
+            try (FileInputStream fis = new FileInputStream("config/db.properties")) {
+                props.load(fis);
+            }
 
             URL = props.getProperty("db.url");
             USER = props.getProperty("db.user");
             PASSWORD = props.getProperty("db.password");
 
+            if (URL == null || USER == null || PASSWORD == null) {
+                throw new RuntimeException("❌ Paramètres DB manquants dans config/db.properties");
+            }
+
         } catch (IOException e) {
             System.err.println("❌ Erreur : impossible de charger config/db.properties");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.err.println("❌ Driver MySQL non trouvé");
             e.printStackTrace();
         }
     }
