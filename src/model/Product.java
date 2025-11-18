@@ -1,40 +1,36 @@
 package model;
 
-public abstract class Product {
+import javafx.beans.property.*;
 
-    protected int id;
-    protected String name;
-    protected double price;
-    protected double purchasePrice;
-    protected int nbItems;
-    protected boolean discountApplied;
+public class Product {
 
-    public Product(int id, String name, double price, double purchasePrice, int nbItems, boolean discountApplied) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.purchasePrice = purchasePrice;
-        this.nbItems = nbItems;
-        this.discountApplied = discountApplied;
+    private IntegerProperty id;
+    private StringProperty name;
+    private DoubleProperty price;
+    private StringProperty category;
+
+    public Product(int id, String name, double price, String category) {
+        this.id = new SimpleIntegerProperty(id);
+        this.name = new SimpleStringProperty(name);
+        this.price = new SimpleDoubleProperty(price);
+        this.category = new SimpleStringProperty(category);
     }
 
-    public Product(String name, double price, double purchasePrice, int nbItems, boolean discountApplied) {
-        this(-1, name, price, purchasePrice, nbItems, discountApplied);
-    }
+    // Getters
+    public int getId() { return id.get(); }
+    public String getName() { return name.get(); }
+    public double getPrice() { return price.get(); }
+    public String getCategory() { return category.get(); }
 
-    // Getters / Setters
+    // Property Getters (OBLIGATOIRE pour TableView)
+    public IntegerProperty idProperty() { return id; }
+    public StringProperty nameProperty() { return name; }
+    public DoubleProperty priceProperty() { return price; }
+    public StringProperty categoryProperty() { return category; }
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public double getPrice() { return price; }
-    public double getPurchasePrice() { return purchasePrice; }
-    public int getNbItems() { return nbItems; }
-    public boolean isDiscountApplied() { return discountApplied; }
-
-    public void setId(int id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setPrice(double price) { this.price = price; }
-    public void setPurchasePrice(double purchasePrice) { this.purchasePrice = purchasePrice; }
-    public void setNbItems(int nbItems) { this.nbItems = nbItems; }
-    public void setDiscountApplied(boolean discountApplied) { this.discountApplied = discountApplied; }
+    // Setters
+    public void setId(int id) { this.id.set(id); }
+    public void setName(String name) { this.name.set(name); }
+    public void setPrice(double price) { this.price.set(price); }
+    public void setCategory(String category) { this.category.set(category); }
 }

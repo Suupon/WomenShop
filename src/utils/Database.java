@@ -16,6 +16,8 @@ public class Database {
     static {
         try {
             Properties props = new Properties();
+
+            // Charge le fichier de configuration
             FileInputStream fis = new FileInputStream("config/db.properties");
             props.load(fis);
 
@@ -24,6 +26,7 @@ public class Database {
             PASSWORD = props.getProperty("db.password");
 
         } catch (IOException e) {
+            System.err.println("❌ Erreur : impossible de charger config/db.properties");
             e.printStackTrace();
         }
     }

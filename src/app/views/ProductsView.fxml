@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="app.controller.ProductsController" spacing="10" prefWidth="600">
+
+    <TableView fx:id="productsTable" prefHeight="600">
+
+        <columns>
+            <TableColumn text="ID" fx:id="colId" prefWidth="50"/>
+            <TableColumn text="Name" fx:id="colName" prefWidth="150"/>
+            <TableColumn text="Price" fx:id="colPrice" prefWidth="100"/>
+            <TableColumn text="Category" fx:id="colCategory" prefWidth="150"/>
+        </columns>
+
+    </TableView>
+
+</VBox>
