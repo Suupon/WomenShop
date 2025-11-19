@@ -1,9 +1,6 @@
 package app.controller;
 
-import dao.AccessoriesDAO;
-import dao.ClothesDAO;
-import dao.ProductDAO;
-import dao.ShoesDAO;
+import dao.*;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,15 +11,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Accessory;
-import model.Clothes;
-import model.Product;
-import model.Shoes;
+import model.*;
+import utils.QuantityDialog;
 
 import java.io.IOException;
 import java.util.List;
 
 public class ProductsController {
+
+    /* =====================
+       FXML COMPONENTS
+       ===================== */
 
     @FXML
     private Label categoryLabel;
@@ -38,12 +37,11 @@ public class ProductsController {
 
     @FXML
     private TableColumn<Product, Number> colPrice;
-
-    @FXML
-    private TableColumn<Product, String> colCategory;
-
     @FXML
     private TableColumn<Product, Boolean> colDiscount;
+
+    @FXML
+    private TableColumn<Product, Boolean> colStock;
 
     @FXML
     private Button addButton;
@@ -57,47 +55,64 @@ public class ProductsController {
     @FXML
     private Button discountButton;
 
+    @FXML
+    private Button sellButton;
+
+    @FXML
+    private Button purchaseButton;
+
+
+    /* =====================
+       DAO + CATEGORY
+       ===================== */
+
     private final ClothesDAO clothesDAO = new ClothesDAO();
     private final ShoesDAO shoesDAO = new ShoesDAO();
     private final AccessoriesDAO accessoriesDAO = new AccessoriesDAO();
 
     private String currentCategory = "Clothes";
-    private ProductDAO<?> currentDAO;
+
+
+    /* =====================
+       INITIALIZATION
+       ===================== */
 
     @FXML
     public void initialize() {
+
         // mapping colonnes
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colStock.setCellValueFactory(new PropertyValueFactory<>("nbItems"));
 
-        // colonne discount (true / false)
-        colDiscount.setCellValueFactory(cellData ->
-                new SimpleBooleanProperty(cellData.getValue().isDiscountApplied()));
+        productsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        productsTable.getColumns().removeIf(c -> c.getText() == null || c.getText().isBlank());
 
-        // handlers boutons
-        addButton.setOnAction(e -> onAdd());
-        editButton.setOnAction(e -> onEdit());
-        deleteButton.setOnAction(e -> onDelete());
+
+        colDiscount.setCellValueFactory(cd ->
+                new SimpleBooleanProperty(cd.getValue().isDiscountApplied()));
+
+        // boutons CRUD
+        addButton.setOnAction(e -> handleAdd());
+        editButton.setOnAction(e -> handleEdit());
+        deleteButton.setOnAction(e -> handleDelete());
         discountButton.setOnAction(e -> onToggleDiscount());
 
-        // par défaut si jamais la vue est ouverte sans catégorie
+        // boutons Sell/Purchase
+        sellButton.setOnAction(e -> handleSell());
+        purchaseButton.setOnAction(e -> handlePurchase());
+
         loadCategory("Clothes");
     }
 
-    // appelé par MainController
+    /* =====================
+       CATEGORY LOADING
+       ===================== */
+
     public void loadCategory(String category) {
         this.currentCategory = category;
-
-        switch (category) {
-            case "Clothes" -> currentDAO = clothesDAO;
-            case "Shoes" -> currentDAO = shoesDAO;
-            case "Accessories" -> currentDAO = accessoriesDAO;
-            default -> currentDAO = clothesDAO;
-        }
-
-        categoryLabel.setText("Products - " + currentCategory);
+        categoryLabel.setText("Products - " + category);
         refreshTable();
     }
 
@@ -115,15 +130,17 @@ public class ProductsController {
         productsTable.setItems(items);
     }
 
-    /* =====================
-       BOUTONS CRUD
-       ===================== */
 
-    private void onAdd() {
-        openForm(null);   // produit null = création
+    /* =====================
+       CRUD BUTTONS
+       ===================== */
+    @FXML
+    private void handleAdd() {
+        openForm(null);
     }
 
-    private void onEdit() {
+    @FXML
+    private void handleEdit() {
         Product selected = productsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             alert("Please select a product to edit.");
@@ -132,7 +149,8 @@ public class ProductsController {
         openForm(selected);
     }
 
-    private void onDelete() {
+    @FXML
+    private void handleDelete() {
         Product selected = productsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             alert("Please select a product to delete.");
@@ -140,66 +158,30 @@ public class ProductsController {
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Delete product");
         confirm.setHeaderText(null);
-        confirm.setContentText("Are you sure you want to delete \"" + selected.getName() + "\" ?");
-        if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
-            return;
-        }
+        confirm.setContentText("Delete \"" + selected.getName() + "\" ?");
+        if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
 
         boolean ok;
-        if (selected instanceof Clothes c) {
-            ok = clothesDAO.delete(c.getId());
-        } else if (selected instanceof Shoes s) {
-            ok = shoesDAO.delete(s.getId());
-        } else if (selected instanceof Accessory a) {
-            ok = accessoriesDAO.delete(a.getId());
-        } else {
-            ok = false;
-        }
 
-        if (!ok) {
-            alert("Error while deleting product in database.");
-        }
+        if (selected instanceof Clothes c) ok = clothesDAO.delete(c.getId());
+        else if (selected instanceof Shoes s) ok = shoesDAO.delete(s.getId());
+        else if (selected instanceof Accessory a) ok = accessoriesDAO.delete(a.getId());
+        else ok = false;
+
+        if (!ok) alert("Error while deleting product.");
+
         refreshTable();
     }
 
-    private void onToggleDiscount() {
-        Product selected = productsTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            alert("Please select a product.");
-            return;
-        }
-
-        boolean newValue = !selected.isDiscountApplied();
-        selected.setDiscountApplied(newValue);
-
-        boolean ok;
-        if (selected instanceof Clothes c) {
-            ok = clothesDAO.update(c);
-        } else if (selected instanceof Shoes s) {
-            ok = shoesDAO.update(s);
-        } else if (selected instanceof Accessory a) {
-            ok = accessoriesDAO.update(a);
-        } else {
-            ok = false;
-        }
-
-        if (!ok) {
-            alert("Error while updating discount in database.");
-        }
-
-        refreshTable();
-    }
 
     /* =====================
-       OUVERTURE FORMULAIRE
+       OPEN FORM
        ===================== */
 
     private void openForm(Product product) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/app/views/ProductFormView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/views/ProductFormView.fxml"));
             Parent root = loader.load();
 
             Stage dialog = new Stage();
@@ -214,12 +196,13 @@ public class ProductsController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            alert("Error while opening the form window.");
+            alert("Error opening form window.");
         }
     }
 
+
     /* =====================
-       Utilitaire
+       SAVE FROM FORM
        ===================== */
 
     public void saveProductFromForm(String category,
@@ -233,7 +216,7 @@ public class ProductsController {
         boolean ok;
 
         if (original == null) {
-            // création
+            // creation
             switch (category) {
                 case "Clothes" -> {
                     Clothes c = new Clothes(0, name, price, purchasePrice, nbItems, discountApplied);
@@ -250,30 +233,136 @@ public class ProductsController {
                 default -> ok = false;
             }
         } else {
-            // modification
+            // update
             original.setName(name);
             original.setPrice(price);
             original.setPurchasePrice(purchasePrice);
             original.setNbItems(nbItems);
             original.setDiscountApplied(discountApplied);
 
-            if (original instanceof Clothes c) {
-                ok = clothesDAO.update(c);
-            } else if (original instanceof Shoes s) {
-                ok = shoesDAO.update(s);
-            } else if (original instanceof Accessory a) {
-                ok = accessoriesDAO.update(a);
-            } else {
-                ok = false;
-            }
+            if (original instanceof Clothes c) ok = clothesDAO.update(c);
+            else if (original instanceof Shoes s) ok = shoesDAO.update(s);
+            else if (original instanceof Accessory a) ok = accessoriesDAO.update(a);
+            else ok = false;
         }
 
-        if (!ok) {
-            alert("Error while saving product in database.");
-        }
+        if (!ok) alert("Error while saving product.");
 
         refreshTable();
     }
+
+
+    /* =====================
+       DISCOUNT
+       ===================== */
+
+    @FXML
+    private void onToggleDiscount() {
+        Product p = productsTable.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            alert("Please select a product.");
+            return;
+        }
+
+        boolean newVal = !p.isDiscountApplied();
+        p.setDiscountApplied(newVal);
+
+        boolean ok;
+
+        if (p instanceof Clothes c) ok = clothesDAO.update(c);
+        else if (p instanceof Shoes s) ok = shoesDAO.update(s);
+        else if (p instanceof Accessory a) ok = accessoriesDAO.update(a);
+        else ok = false;
+
+        if (!ok) alert("Error updating discount.");
+
+        refreshTable();
+    }
+
+
+    /* =====================
+       SELL
+       ===================== */
+
+    @FXML
+    private void handleSell() {
+        Product p = productsTable.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            alert("Please select a product.");
+            return;
+        }
+
+        Integer qty = QuantityDialog.show("Sell product");
+        if (qty == null) return;
+
+        if (qty > p.getNbItems()) {
+            alert("Not enough stock.");
+            return;
+        }
+
+        double salePrice = p.getPrice();
+
+        if (p.isDiscountApplied()) {
+            switch (currentCategory) {
+                case "Clothes" -> salePrice *= 0.70;
+                case "Shoes" -> salePrice *= 0.80;
+                case "Accessories" -> salePrice *= 0.50;
+            }
+        }
+
+        int newStock = p.getNbItems() - qty;
+        updateStock(p, newStock);
+
+        TransactionDAO.insert(new Transaction(
+                p.getId(), currentCategory, "SELL", qty, salePrice));
+
+        refreshTable();
+    }
+
+
+    /* =====================
+       PURCHASE
+       ===================== */
+
+    @FXML
+    private void handlePurchase() {
+        Product p = productsTable.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            alert("Please select a product.");
+            return;
+        }
+
+        Integer qty = QuantityDialog.show("Purchase stock");
+        if (qty == null) return;
+
+        double cost = p.getPurchasePrice();
+
+        int newStock = p.getNbItems() + qty;
+        updateStock(p, newStock);
+
+        TransactionDAO.insert(new Transaction(
+                p.getId(), currentCategory, "PURCHASE", qty, cost));
+
+        refreshTable();
+    }
+
+
+    /* =====================
+       UPDATE STOCK (DAO)
+       ===================== */
+
+    private void updateStock(Product p, int newStock) {
+        p.setNbItems(newStock);
+
+        if (p instanceof Clothes c) clothesDAO.updateStock(c.getId(), newStock);
+        else if (p instanceof Shoes s) shoesDAO.updateStock(s.getId(), newStock);
+        else if (p instanceof Accessory a) accessoriesDAO.updateStock(a.getId(), newStock);
+    }
+
+
+    /* =====================
+       UTIL
+       ===================== */
 
     private void alert(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);

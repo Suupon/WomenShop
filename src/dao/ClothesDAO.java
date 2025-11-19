@@ -125,4 +125,25 @@ public class ClothesDAO implements ProductDAO<Clothes> {
 
         return false;
     }
+
+    public void updateStock(int id, int newStock) {
+        ProductDAO.updateStock("clothes", id, newStock); // ou shoes / accessories
+    }
+
+    public void updateDiscount(int id, boolean status) {
+        String sql = "UPDATE clothes SET discount_applied = ? WHERE id = ?"; // adapter table
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setBoolean(1, status);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

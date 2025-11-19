@@ -20,21 +20,34 @@
 
     <!-- Boutons CRUD -->
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Button text="Add" fx:id="addButton" prefWidth="120"/>
-        <Button text="Edit" fx:id="editButton" prefWidth="120"/>
-        <Button text="Delete" fx:id="deleteButton" prefWidth="120"/>
-        <Button text="Apply / Remove Discount" fx:id="discountButton" prefWidth="200"/>
+
+        <Button fx:id="addButton" text="Add" onAction="#handleAdd"/>
+        <Button fx:id="editButton" text="Edit" onAction="#handleEdit"/>
+        <Button fx:id="deleteButton" text="Delete" onAction="#handleDelete"/>
+
+        <Region prefWidth="25"/>
+
+        <Button fx:id="sellButton" text="Sell" onAction="#handleSell"/>
+        <Button fx:id="purchaseButton" text="Purchase" onAction="#handlePurchase"/>
+
+        <Region prefWidth="25"/>
+
+        <Button fx:id="discountButton" text="Apply / Remove Discount" onAction="#onToggleDiscount"/>
+
     </HBox>
+
 
     <!-- Tableau -->
     <TableView fx:id="productsTable" VBox.vgrow="ALWAYS">
+        <columnResizePolicy>
+            <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
         <columns>
             <TableColumn text="ID" fx:id="colId" prefWidth="60"/>
             <TableColumn text="Name" fx:id="colName" prefWidth="220"/>
             <TableColumn text="Price (€)" fx:id="colPrice" prefWidth="120"/>
-            <TableColumn text="Category" fx:id="colCategory" prefWidth="150"/>
+            <TableColumn text="Stock" fx:id="colStock" prefWidth="120"/>
             <TableColumn text="Discount" fx:id="colDiscount" prefWidth="90"/>
         </columns>
     </TableView>
-
 </VBox>
