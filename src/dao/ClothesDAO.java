@@ -1,7 +1,6 @@
 package dao;
 
 import model.Clothes;
-import model.Product;
 import utils.Database;
 
 import java.sql.*;
@@ -125,10 +124,5 @@ public class ClothesDAO implements ProductDAO<Clothes> {
         }
 
         return false;
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return List.of();
     }
 }

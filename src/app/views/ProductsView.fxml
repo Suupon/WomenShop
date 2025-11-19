@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="app.controller.ProductsController" spacing="10" prefWidth="600">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="app.controller.ProductsController"
+      spacing="10" prefWidth="900" prefHeight="600">
 
-    <TableView fx:id="productsTable" prefHeight="600">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
 
+    <!-- Titre -->
+    <Label fx:id="categoryLabel"
+           text="Products"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <!-- Boutons CRUD -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Add" fx:id="addButton" prefWidth="120"/>
+        <Button text="Edit" fx:id="editButton" prefWidth="120"/>
+        <Button text="Delete" fx:id="deleteButton" prefWidth="120"/>
+        <Button text="Apply / Remove Discount" fx:id="discountButton" prefWidth="200"/>
+    </HBox>
+
+    <!-- Tableau -->
+    <TableView fx:id="productsTable" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn text="ID" fx:id="colId" prefWidth="50"/>
-            <TableColumn text="Name" fx:id="colName" prefWidth="150"/>
-            <TableColumn text="Price" fx:id="colPrice" prefWidth="100"/>
+            <TableColumn text="ID" fx:id="colId" prefWidth="60"/>
+            <TableColumn text="Name" fx:id="colName" prefWidth="220"/>
+            <TableColumn text="Price (€)" fx:id="colPrice" prefWidth="120"/>
             <TableColumn text="Category" fx:id="colCategory" prefWidth="150"/>
+            <TableColumn text="Discount" fx:id="colDiscount" prefWidth="90"/>
         </columns>
-
     </TableView>
 
 </VBox>

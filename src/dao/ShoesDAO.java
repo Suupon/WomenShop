@@ -1,35 +1,128 @@
 package dao;
 
-import model.Product;
-import utils.DBUtil;
+import model.Shoes;
+import utils.Database;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoesDAO implements ProductDAO {
+public class ShoesDAO implements ProductDAO<Shoes> {
 
     @Override
-    public List<Product> getAllProducts() {
-        List<Product> products = new ArrayList<>();
+    public List<Shoes> findAll() {
+        List<Shoes> list = new ArrayList<>();
+        String sql = "SELECT * FROM shoes";
 
-        String query = "SELECT id, name, price, category FROM shoes";
-
-        try (Connection conn = DBUtil.getConnection();
+        try (Connection conn = Database.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                products.add(new Product(
+                list.add(new Shoes(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getString("category")
+                        rs.getDouble("purchase_price"),
+                        rs.getInt("nbItems"),
+                        rs.getBoolean("discount_applied")
                 ));
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return products;
+
+        return list;
+    }
+
+    @Override
+    public Shoes findById(int id) {
+        String sql = "SELECT * FROM shoes WHERE id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Shoes(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getDouble("purchase_price"),
+                        rs.getInt("nbItems"),
+                        rs.getBoolean("discount_applied")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean insert(Shoes s) {
+        String sql = "INSERT INTO shoes(name, price, purchase_price, nbItems, discount_applied) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, s.getName());
+            ps.setDouble(2, s.getPrice());
+            ps.setDouble(3, s.getPurchasePrice());
+            ps.setInt(4, s.getNbItems());
+            ps.setBoolean(5, s.isDiscountApplied());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean update(Shoes s) {
+        String sql = "UPDATE shoes SET name=?, price=?, purchase_price=?, nbItems=?, discount_applied=? WHERE id=?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, s.getName());
+            ps.setDouble(2, s.getPrice());
+            ps.setDouble(3, s.getPurchasePrice());
+            ps.setInt(4, s.getNbItems());
+            ps.setBoolean(5, s.isDiscountApplied());
+            ps.setInt(6, s.getId());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        String sql = "DELETE FROM shoes WHERE id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

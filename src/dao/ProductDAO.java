@@ -1,8 +1,16 @@
 package dao;
 
-import model.Product;
 import java.util.List;
 
-public interface ProductDAO {
-    List<Product> getAllProducts();
+public interface ProductDAO<T> {
+
+    List<T> findAll();
+
+    T findById(int id);
+
+    boolean insert(T t);
+
+    boolean update(T t);
+
+    boolean delete(int id);
 }

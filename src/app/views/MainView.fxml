@@ -12,8 +12,8 @@
             <menus>
                 <Menu text="Products">
                     <items>
-                        <MenuItem text="Clothes"   fx:id="menuClothes"/>
-                        <MenuItem text="Shoes"     fx:id="menuShoes"/>
+                        <MenuItem text="Clothes" fx:id="menuClothes"/>
+                        <MenuItem text="Shoes" fx:id="menuShoes"/>
                         <MenuItem text="Accessories" fx:id="menuAccessories"/>
                     </items>
                 </Menu>
@@ -21,8 +21,12 @@
         </MenuBar>
     </top>
 
+    <!-- Zone centrale dynamique où on chargera ProductsView -->
     <center>
-        <Label text="Welcome to WomenShop" style="-fx-font-size: 24px; -fx-padding: 20;"/>
+        <StackPane fx:id="contentArea">
+            <Label text="Welcome to WomenShop"
+                   style="-fx-font-size: 24px; -fx-padding: 20;"/>
+        </StackPane>
     </center>
 
 </BorderPane>
