@@ -46,6 +46,8 @@
             <TableColumn text="ID" fx:id="colId" prefWidth="60"/>
             <TableColumn text="Name" fx:id="colName" prefWidth="220"/>
             <TableColumn text="Price (€)" fx:id="colPrice" prefWidth="120"/>
+            <TableColumn fx:id="colPurchasePrice" text="Purchase Price (€)" prefWidth="140"/>
+
             <TableColumn text="Stock" fx:id="colStock" prefWidth="120"/>
             <TableColumn text="Discount" fx:id="colDiscount" prefWidth="90"/>
             <TableColumn text="Discounted (€)" fx:id="colDiscountedPrice" prefWidth="140"/>

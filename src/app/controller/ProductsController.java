@@ -39,6 +39,8 @@ public class ProductsController {
     @FXML private TableColumn<Product, Number> colId;
     @FXML private TableColumn<Product, String> colName;
     @FXML private TableColumn<Product, Number> colPrice;
+    @FXML private TableColumn<Product, Number> colPurchasePrice;
+
     @FXML private TableColumn<Product, Boolean> colDiscount;
     @FXML private TableColumn<Product, Number> colStock;
     @FXML private TableColumn<Product, Double> colDiscountedPrice;
@@ -70,6 +72,7 @@ public class ProductsController {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colPurchasePrice.setCellValueFactory(new PropertyValueFactory<>("purchasePrice"));
         colStock.setCellValueFactory(new PropertyValueFactory<>("nbItems"));
 
         colDiscount.setCellValueFactory(cd ->
