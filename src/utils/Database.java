@@ -1,7 +1,6 @@
 package utils;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,13 +14,19 @@ public class Database {
 
     static {
         try {
-            // Charge le driver MySQL (sécurisé)
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Charge les propriétés
             Properties props = new Properties();
-            try (FileInputStream fis = new FileInputStream("config/db.properties")) {
-                props.load(fis);
+
+            // 🔥 Charge depuis le classpath (SAFE)
+            try (InputStream input = Database.class.getClassLoader()
+                    .getResourceAsStream("config/db.properties")) {
+
+                if (input == null) {
+                    throw new RuntimeException("❌ config/db.properties introuvable !");
+                }
+
+                props.load(input);
             }
 
             URL = props.getProperty("db.url");
@@ -32,11 +37,7 @@ public class Database {
                 throw new RuntimeException("❌ Paramètres DB manquants dans config/db.properties");
             }
 
-        } catch (IOException e) {
-            System.err.println("❌ Erreur : impossible de charger config/db.properties");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.err.println("❌ Driver MySQL non trouvé");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

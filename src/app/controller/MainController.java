@@ -6,9 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 
-import java.io.File;
-import java.net.URL;
-
 public class MainController {
 
     @FXML
@@ -32,15 +29,49 @@ public class MainController {
 
     private void loadProductsView(String category) {
         try {
-            File fxmlFile = new File("src/app/views/ProductsView.fxml");
-            URL fxmlUrl = fxmlFile.toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/app/views/ProductsView.fxml")
+            );
 
-            FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Node root = loader.load();
 
             ProductsController controller = loader.getController();
+            controller.setMainController(this);
             controller.loadCategory(category);
 
+            contentArea.getChildren().setAll(root);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void loadTransactionsView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/app/views/TransactionsView.fxml")
+            );
+
+            Node root = loader.load();
+            contentArea.getChildren().setAll(root);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    void loadCapitalView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/app/views/CapitalView.fxml")
+            );
+
+            Node root = loader.load();
+
+            CapitalController controller = loader.getController();
+            controller.updateValues();
 
             contentArea.getChildren().setAll(root);
 

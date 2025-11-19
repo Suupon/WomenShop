@@ -1,0 +1,120 @@
+/* ------------------------------
+   GLOBAL APP STYLE
+--------------------------------*/
+
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial;
+    -fx-background-color: #f7f7f7;
+}
+
+/* ------------------------------
+   TITLES
+--------------------------------*/
+
+.label {
+    -fx-text-fill: #333;
+}
+
+.label.title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a2a2a;
+}
+
+/* ------------------------------
+   BUTTONS
+--------------------------------*/
+.button {
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(#f2f2f2, #e6e6e6);
+    -fx-padding: 7 15;
+    -fx-border-radius: 8;
+    -fx-border-color: #cfcfcf;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#ffffff, #eeeeee);
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(#dcdcdc, #c9c9c9);
+}
+
+/* DELETE BUTTON (danger) */
+.button.delete {
+    -fx-background-color: #ffcccc;
+    -fx-border-color: #cc9999;
+}
+
+.button.delete:hover {
+    -fx-background-color: #ffb3b3;
+}
+
+/* ------------------------------
+   TABLEVIEW
+--------------------------------*/
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+/* Header */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(#fafafa, #eaeaea);
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+/* Rows */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-cell-size: 38px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f5f5f5;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e8f0fe; /* bleu clair Google */
+}
+
+/* Stock color coding (we will assign these in code) */
+.stock-low {
+    -fx-text-fill: #d00000; /* rouge */
+    -fx-font-weight: bold;
+}
+
+.stock-medium {
+    -fx-text-fill: #ff8800; /* orange */
+    -fx-font-weight: bold;
+}
+
+.stock-good {
+    -fx-text-fill: #228B22; /* vert forêt */
+    -fx-font-weight: bold;
+}
+
+/* Promo price color */
+.discounted-price {
+    -fx-text-fill: #0066cc; /* bleu intense */
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #dbe7ff !important; /* bleu clair Apple */
+    -fx-text-fill: #000 !important;
+}
+
+.table-cell:selected {
+    -fx-text-fill: #000 !important; /* texte noir quand sélectionné */
+}

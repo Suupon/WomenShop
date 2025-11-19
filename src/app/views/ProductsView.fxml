@@ -48,6 +48,7 @@
             <TableColumn text="Price (€)" fx:id="colPrice" prefWidth="120"/>
             <TableColumn text="Stock" fx:id="colStock" prefWidth="120"/>
             <TableColumn text="Discount" fx:id="colDiscount" prefWidth="90"/>
+            <TableColumn text="Discounted (€)" fx:id="colDiscountedPrice" prefWidth="140"/>
         </columns>
     </TableView>
 </VBox>

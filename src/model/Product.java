@@ -6,7 +6,7 @@ public class Product {
 
     private IntegerProperty id;
     private StringProperty name;
-    private DoubleProperty price;             // selling price
+    private SimpleDoubleProperty price;             // selling price
     private DoubleProperty purchasePrice;     // cost price
     private IntegerProperty nbItems;
     private BooleanProperty discountApplied;
@@ -37,6 +37,21 @@ public class Product {
         this.discountApplied = new SimpleBooleanProperty(discountApplied);
         this.category = new SimpleStringProperty(category);
     }
+
+    public double getDiscountedPrice() {
+        double finalPrice = getPrice(); // valeur numérique
+
+
+            switch (getCategory()) {
+                case "Clothes" -> finalPrice *= 0.70;
+                case "Shoes" -> finalPrice *= 0.80;
+                case "Accessory" -> finalPrice *= 0.50;
+
+        }
+
+        return finalPrice;
+    }
+
 
     // GETTERS
     public int getId() { return id.get(); }

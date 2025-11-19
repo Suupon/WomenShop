@@ -15,6 +15,9 @@
                         <MenuItem text="Clothes" fx:id="menuClothes"/>
                         <MenuItem text="Shoes" fx:id="menuShoes"/>
                         <MenuItem text="Accessories" fx:id="menuAccessories"/>
+                        <MenuItem text="Transactions" onAction="#loadTransactionsView"/>
+                        <MenuItem text="Financial Summary" onAction="#loadCapitalView"/>
+
                     </items>
                 </Menu>
             </menus>

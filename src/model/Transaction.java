@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Transaction {
 
@@ -8,31 +8,43 @@ public class Transaction {
     private int productId;
     private String category;
     private String type;
-    private int quantity;
-    private double unitPrice;
-    private double totalAmount;
-    private Timestamp date;
+    private int qty;
+    private double unitPrice;     // prix unitaire
+    private double totalAmount;   // prix total = qty * unitPrice
+    private LocalDateTime date;
 
-    public Transaction(int productId, String category, String type, int quantity, double unitPrice) {
+    public Transaction(int id,
+                       int productId,
+                       String category,
+                       String type,
+                       int qty,
+                       double unitPrice,
+                       LocalDateTime date) {
+        this.id = id;
         this.productId = productId;
         this.category = category;
         this.type = type;
-        this.quantity = quantity;
+        this.qty = qty;
         this.unitPrice = unitPrice;
-        this.totalAmount = unitPrice * quantity;
+        this.totalAmount = qty * unitPrice;
+        this.date = date;
     }
 
-    // Getters
+    // constructeur utilisé pour les INSERT
+    public Transaction(int productId,
+                       String category,
+                       String type,
+                       int qty,
+                       double unitPrice) {
+        this(0, productId, category, type, qty, unitPrice, LocalDateTime.now());
+    }
+
     public int getId() { return id; }
     public int getProductId() { return productId; }
     public String getCategory() { return category; }
     public String getType() { return type; }
-    public int getQuantity() { return quantity; }
+    public int getQty() { return qty; }
     public double getUnitPrice() { return unitPrice; }
     public double getTotalAmount() { return totalAmount; }
-    public Timestamp getDate() { return date; }
-
-    // Setters
-    public void setId(int id) { this.id = id; }
-    public void setDate(Timestamp date) { this.date = date; }
+    public LocalDateTime getDate() { return date; }
 }

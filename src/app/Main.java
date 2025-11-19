@@ -14,12 +14,15 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            // Trouver manuellement le fichier FXML avec un chemin FILE:
+            // Trouver manuellement le fichier FXML avec un chemin FILE
             File fxmlFile = new File("src/app/views/MainView.fxml");
             URL fxmlUrl = fxmlFile.toURI().toURL();
 
+
+
             Parent root = FXMLLoader.load(fxmlUrl);
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/app/style/style.css").toExternalForm());
 
             stage.setTitle("WomenShop");
             stage.setScene(scene);

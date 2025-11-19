@@ -28,10 +28,10 @@ lib/javafx/
 # ===============================
 
 # DO NOT PUSH LOCAL PASSWORDS
-config/db.properties
+src/config/db.properties
 
 # Allow template version for the teacher
-config/database-template.properties
+src/config/database-template.properties
 
 # ===============================
 # OS-specific

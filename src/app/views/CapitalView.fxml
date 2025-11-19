@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="app.controller.CapitalController"
+      spacing="20" prefWidth="600" prefHeight="400">
+
+    <padding>
+        <Insets top="20" right="30" bottom="20" left="30"/>
+    </padding>
+
+    <Label text="Financial Summary"
+           style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="20" vgap="15">
+
+        <columnConstraints>
+            <ColumnConstraints prefWidth="200"/>
+            <ColumnConstraints prefWidth="200"/>
+        </columnConstraints>
+
+        <children>
+
+            <Label text="Total Sales (Incomes):" style="-fx-font-size: 16px;"/>
+            <Label fx:id="labelIncomes" style="-fx-font-size: 16px; -fx-font-weight: bold;" GridPane.columnIndex="1"/>
+
+            <Label text="Total Purchases (Costs):" GridPane.rowIndex="1" style="-fx-font-size: 16px;"/>
+            <Label fx:id="labelCosts" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <Label text="Stock Value:" GridPane.rowIndex="2" style="-fx-font-size: 16px;"/>
+            <Label fx:id="labelStockValue" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <Separator GridPane.columnSpan="2" GridPane.rowIndex="3"/>
+
+            <Label text="Total Capital:" GridPane.rowIndex="4"
+                   style="-fx-font-size: 20px; font-weight: bold;"/>
+            <Label fx:id="labelCapital"
+                   GridPane.columnIndex="1" GridPane.rowIndex="4"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        </children>
+
+    </GridPane>
+
+</VBox>
