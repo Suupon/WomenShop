@@ -14,7 +14,7 @@
     </padding>
 
     <Label text="Transactions History"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+           styleClass="page-title"/>
 
     <TableView fx:id="transactionsTable" VBox.vgrow="ALWAYS">
 

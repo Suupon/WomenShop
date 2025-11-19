@@ -2,33 +2,90 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
+            fx:id="root"
             fx:controller="app.controller.MainController">
 
+    <!-- ======================
+         TOP MENU BAR
+    ======================= -->
     <top>
         <MenuBar>
             <menus>
+
+                <Menu text="Home">
+                    <items>
+                        <MenuItem text="Back to Home" onAction="#loadHomePage"/>
+                    </items>
+                </Menu>
+
                 <Menu text="Products">
                     <items>
                         <MenuItem text="Clothes" fx:id="menuClothes"/>
                         <MenuItem text="Shoes" fx:id="menuShoes"/>
                         <MenuItem text="Accessories" fx:id="menuAccessories"/>
+                        <SeparatorMenuItem/>
                         <MenuItem text="Transactions" onAction="#loadTransactionsView"/>
                         <MenuItem text="Financial Summary" onAction="#loadCapitalView"/>
-
                     </items>
                 </Menu>
+
             </menus>
         </MenuBar>
+
     </top>
 
-    <!-- Zone centrale dynamique où on chargera ProductsView -->
+
+    <!-- ======================
+         CENTER (HOME PAGE)
+    ======================= -->
     <center>
         <StackPane fx:id="contentArea">
-            <Label text="Welcome to WomenShop"
-                   style="-fx-font-size: 24px; -fx-padding: 20;"/>
+
+            <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+
+                <Label text="Welcome to WomenShop" styleClass="welcome-title"/>
+
+                <Label text="Manage products, track inventory and monitor financial performance."
+                       styleClass="welcome-subtitle"/>
+
+                <HBox spacing="20" alignment="CENTER">
+
+                    <!-- PRODUCTS CARD -->
+                    <VBox styleClass="welcome-card"
+                          onMouseClicked="#goToProducts"
+                          style="-fx-cursor: hand;">
+                        <Label text="Products" styleClass="card-title"/>
+                        <Label text="All categories" styleClass="card-subtitle"/>
+                    </VBox>
+
+                    <!-- INVENTORY CARD -->
+                    <VBox styleClass="welcome-card"
+                          onMouseClicked="#goToInventory"
+                          style="-fx-cursor: hand;">
+                        <Label text="Inventory" styleClass="card-title"/>
+                        <Label text="Track stock levels" styleClass="card-subtitle"/>
+                    </VBox>
+
+                    <!-- FINANCES CARD -->
+                    <VBox styleClass="welcome-card"
+                          onMouseClicked="#goToFinances"
+                          style="-fx-cursor: hand;">
+                        <Label text="Finances" styleClass="card-title"/>
+                        <Label text="Overview of performance" styleClass="card-subtitle"/>
+                    </VBox>
+
+                </HBox>
+
+                <Button text="Go to Products"
+                        onAction="#goToProducts"
+                        styleClass="welcome-button"/>
+
+            </VBox>
+
         </StackPane>
     </center>
 

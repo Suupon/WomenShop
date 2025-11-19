@@ -1,49 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="app.controller.CapitalController"
-      spacing="20" prefWidth="600" prefHeight="400">
+      spacing="30"
+      alignment="TOP_LEFT"
+      style="-fx-padding: 40;">
 
-    <padding>
-        <Insets top="20" right="30" bottom="20" left="30"/>
-    </padding>
+    <Label text="Financial Summary" styleClass="page-title"/>
 
-    <Label text="Financial Summary"
-           style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+    <HBox spacing="20">
 
-    <GridPane hgap="20" vgap="15">
+        <VBox styleClass="finance-card">
+            <Label text="Sales (Incomes)" styleClass="finance-card-title"/>
+            <Label fx:id="labelIncomes" styleClass="finance-value"/>
+        </VBox>
 
-        <columnConstraints>
-            <ColumnConstraints prefWidth="200"/>
-            <ColumnConstraints prefWidth="200"/>
-        </columnConstraints>
+        <VBox styleClass="finance-card">
+            <Label text="Purchases (Costs)" styleClass="finance-card-title"/>
+            <Label fx:id="labelCosts" styleClass="finance-value"/>
+        </VBox>
 
-        <children>
+        <VBox styleClass="finance-card">
+            <Label text="Stock Value" styleClass="finance-card-title"/>
+            <Label fx:id="labelStockValue" styleClass="finance-value"/>
+        </VBox>
 
-            <Label text="Total Sales (Incomes):" style="-fx-font-size: 16px;"/>
-            <Label fx:id="labelIncomes" style="-fx-font-size: 16px; -fx-font-weight: bold;" GridPane.columnIndex="1"/>
+    </HBox>
 
-            <Label text="Total Purchases (Costs):" GridPane.rowIndex="1" style="-fx-font-size: 16px;"/>
-            <Label fx:id="labelCosts" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <Separator/>
 
-            <Label text="Stock Value:" GridPane.rowIndex="2" style="-fx-font-size: 16px;"/>
-            <Label fx:id="labelStockValue" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-            <Separator GridPane.columnSpan="2" GridPane.rowIndex="3"/>
-
-            <Label text="Total Capital:" GridPane.rowIndex="4"
-                   style="-fx-font-size: 20px; font-weight: bold;"/>
-            <Label fx:id="labelCapital"
-                   GridPane.columnIndex="1" GridPane.rowIndex="4"
-                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-
-        </children>
-
-    </GridPane>
+    <VBox spacing="10">
+        <Label text="Total Capital" styleClass="finance-total-title"/>
+        <Label fx:id="labelCapital" styleClass="finance-total-value"/>
+    </VBox>
 
 </VBox>

@@ -1,120 +1,924 @@
-/* ------------------------------
-   GLOBAL APP STYLE
---------------------------------*/
+/* ==========================================================
+   WOMENSHOP - GLOBAL THEME (LIGHT + DARK)
+   Appliquer ce fichier à toutes les scènes JavaFX.
+   Tu peux activer le dark mode en ajoutant la classe "dark"
+   à la root : root.getStyleClass().add("dark");
+========================================================== */
 
+/* ------------------------------
+   ROOT / SCÈNE
+--------------------------------*/
 .root {
     -fx-font-family: "Segoe UI", "Helvetica Neue", Arial;
-    -fx-background-color: #f7f7f7;
+    -fx-background-color: #f3f4f6;
+}
+
+/* Dark mode (optionnel, activé par styleClass "dark" sur la root) */
+.root.dark {
+    -fx-background-color: #0f172a;
 }
 
 /* ------------------------------
-   TITLES
+   TITRES & TEXTES
 --------------------------------*/
-
 .label {
-    -fx-text-fill: #333;
+    -fx-text-fill: #2f2f2f;
+}
+
+.root.dark .label {
+    -fx-text-fill: #e5e7eb;
 }
 
 .label.title {
     -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2a2a2a;
+    -fx-text-fill: #111827;
+}
+
+.root.dark .label.title {
+    -fx-text-fill: #f9fafb;
+}
+
+.label.subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #6b7280;
+}
+
+.root.dark .label.subtitle {
+    -fx-text-fill: #9ca3af;
+}
+
+/* Petits labels secondaires (ex: infos capital en bas) */
+.label.muted {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9ca3af;
+}
+
+.root.dark .label.muted {
+    -fx-text-fill: #6b7280;
 }
 
 /* ------------------------------
-   BUTTONS
+   BOUTONS - VARIANTS
 --------------------------------*/
 .button {
-    -fx-background-radius: 8;
-    -fx-background-color: linear-gradient(#f2f2f2, #e6e6e6);
-    -fx-padding: 7 15;
-    -fx-border-radius: 8;
-    -fx-border-color: #cfcfcf;
-    -fx-text-fill: #333;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 8 18;
     -fx-font-size: 14px;
+    -fx-font-weight: 500;
+
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #374151;
+
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#ffffff, #eeeeee);
+    -fx-background-color: #f9fafb;
 }
 
 .button:pressed {
-    -fx-background-color: linear-gradient(#dcdcdc, #c9c9c9);
+    -fx-background-color: #e5e7eb;
+}
+
+/* Dark mode */
+.root.dark .button {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #4b5563;
+    -fx-text-fill: #e5e7eb;
+}
+
+.root.dark .button:hover {
+    -fx-background-color: #374151;
+}
+
+.root.dark .button:pressed {
+    -fx-background-color: #111827;
+}
+
+/* Bouton principal (ex: "Add Product", "Confirm") */
+.button.primary {
+    -fx-background-color: #2563eb;
+    -fx-border-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.4), 12, 0, 0, 3);
+}
+
+.button.primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.button.primary:pressed {
+    -fx-background-color: #1e40af;
+}
+
+/* Bouton secondaire (ex: "Cancel") */
+.button.secondary {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #9ca3af;
+    -fx-text-fill: #374151;
+}
+
+.button.secondary:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Bouton "ghost" (icône seule, sans fond fort) */
+.button.ghost {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: null;
+    -fx-text-fill: #6b7280;
+}
+
+.button.ghost:hover {
+    -fx-background-color: #e5e7eb;
 }
 
 /* DELETE BUTTON (danger) */
 .button.delete {
-    -fx-background-color: #ffcccc;
-    -fx-border-color: #cc9999;
+    -fx-background-color: #fee2e2;
+    -fx-border-color: #fecaca;
+    -fx-text-fill: #b91c1c;
 }
 
 .button.delete:hover {
-    -fx-background-color: #ffb3b3;
+    -fx-background-color: #fecaca;
+}
+
+.button.delete:pressed {
+    -fx-background-color: #fca5a5;
+}
+
+/* Dark mode - danger */
+.root.dark .button.delete {
+    -fx-background-color: #7f1d1d;
+    -fx-border-color: #ef4444;
+    -fx-text-fill: #fee2e2;
 }
 
 /* ------------------------------
-   TABLEVIEW
+   TEXTFIELDS / COMBOBOX / SPINNER
 --------------------------------*/
+.text-field,
+.combo-box-base,
+.spinner,
+.text-area {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-padding: 6 10;
+    -fx-text-fill: #111827;
+    -fx-font-size: 13px;
+}
 
+.text-area {
+    -fx-focus-color: transparent;
+}
+
+/* Hover / focus */
+.text-field:focused,
+.combo-box-base:focused,
+.spinner:focused,
+.text-area:focused {
+    -fx-border-color: #2563eb;
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.25), 8, 0, 0, 2);
+}
+
+/* Dark mode */
+.root.dark .text-field,
+.root.dark .combo-box-base,
+.root.dark .spinner,
+.root.dark .text-area {
+    -fx-background-color: #111827;
+    -fx-border-color: #4b5563;
+    -fx-text-fill: #f9fafb;
+}
+
+/* ------------------------------
+   ERREURS DE FORMULAIRE
+--------------------------------*/
+.input-error {
+    -fx-border-color: #ef4444 !important;
+    -fx-background-color: #fef2f2;
+}
+
+.root.dark .input-error {
+    -fx-background-color: #7f1d1d;
+}
+
+/* Labels d'erreurs (ex: "Please enter a number") */
+.label.error {
+    -fx-text-fill: #b91c1c;
+    -fx-font-size: 11px;
+}
+
+/* ------------------------------
+   SIDEBAR (Menu à gauche)
+--------------------------------*/
+/* Tu peux mettre un VBox avec styleClass="sidebar" dans MainView.fxml */
+.sidebar {
+    -fx-background-color: #111827;
+    -fx-padding: 16 12;
+    -fx-spacing: 10;
+}
+
+.root.dark .sidebar {
+    -fx-background-color: #020617;
+}
+
+.sidebar-title {
+    -fx-text-fill: #e5e7eb;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.sidebar-subtitle {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 12px;
+}
+
+/* Boutons de navigation dans la sidebar */
+.sidebar-button {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #d1d5db;
+    -fx-padding: 8 10;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #1f2937;
+}
+
+.sidebar-button:focused,
+.sidebar-button:pressed,
+.sidebar-button.selected {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: #ffffff;
+}
+
+/* ------------------------------
+   TOP BAR (Header de la fenêtre)
+--------------------------------*/
+/* Ex: HBox en haut avec class "top-bar" */
+.top-bar {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10 16;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+}
+
+.root.dark .top-bar {
+    -fx-background-color: #020617;
+    -fx-border-color: #1f2937;
+}
+
+/* Label dans la top bar */
+.top-bar .label {
+    -fx-text-fill: #111827;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.root.dark .top-bar .label {
+    -fx-text-fill: #e5e7eb;
+}
+
+/* ------------------------------
+   CARDS / PANELS (Stats, capital, etc.)
+--------------------------------*/
+/* Card générique */
+.card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-padding: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 3);
+}
+
+.root.dark .card {
+    -fx-background-color: #020617;
+    -fx-border-color: #1f2937;
+}
+
+/* Card de stats (capital, income, cost, stock value) */
+.stats-card-title {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-transform: uppercase;
+}
+
+.root.dark .stats-card-title {
+    -fx-text-fill: #9ca3af;
+}
+
+.stats-card-value {
+    -fx-text-fill: #111827;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.root.dark .stats-card-value {
+    -fx-text-fill: #e5e7eb;
+}
+
+/* Variantes de couleur pour stats */
+.stats-capital {
+    -fx-text-fill: #16a34a; /* vert */
+}
+
+.stats-income {
+    -fx-text-fill: #2563eb; /* bleu */
+}
+
+.stats-cost {
+    -fx-text-fill: #dc2626; /* rouge */
+}
+
+/* ------------------------------
+   TABLEVIEW - STYLE PREMIUM
+--------------------------------*/
 .table-view {
     -fx-background-color: white;
-    -fx-border-color: #dcdcdc;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #e5e7eb;
+    -fx-table-cell-border-color: transparent;
+    -fx-control-inner-background: transparent;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+/* Dark mode */
+.root.dark .table-view {
+    -fx-background-color: #020617;
+    -fx-border-color: #1f2937;
 }
 
 /* Header */
 .table-view .column-header-background {
-    -fx-background-color: linear-gradient(#fafafa, #eaeaea);
+    -fx-background-color: linear-gradient(#f9fafb, #eceff3);
+    -fx-border-radius: 10 10 0 0;
+}
+
+.root.dark .table-view .column-header-background {
+    -fx-background-color: linear-gradient(#020617, #0f172a);
+}
+
+.table-view .column-header {
+    -fx-border-color: transparent;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #333;
+    -fx-text-fill: #111827;
     -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.root.dark .table-view .column-header .label {
+    -fx-text-fill: #e5e7eb;
 }
 
 /* Rows */
 .table-row-cell {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
+    -fx-cell-size: 40px;
     -fx-border-color: transparent;
-    -fx-cell-size: 38px;
+    -fx-text-fill: #1f2937;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: #f8fafc;
 }
 
+.root.dark .table-row-cell:odd {
+    -fx-background-color: #020617;
+}
+
+.root.dark .table-row-cell {
+    -fx-text-fill: #e5e7eb;
+}
+
+/* Hover */
 .table-row-cell:hover {
-    -fx-background-color: #e8f0fe; /* bleu clair Google */
+    -fx-background-color: #e6f0ff;
 }
 
-/* Stock color coding (we will assign these in code) */
-.stock-low {
-    -fx-text-fill: #d00000; /* rouge */
-    -fx-font-weight: bold;
+.root.dark .table-row-cell:hover {
+    -fx-background-color: #1f2937;
 }
 
-.stock-medium {
-    -fx-text-fill: #ff8800; /* orange */
-    -fx-font-weight: bold;
-}
-
-.stock-good {
-    -fx-text-fill: #228B22; /* vert forêt */
-    -fx-font-weight: bold;
-}
-
-/* Promo price color */
-.discounted-price {
-    -fx-text-fill: #0066cc; /* bleu intense */
-    -fx-font-weight: bold;
-}
-
+/* Selected row */
 .table-row-cell:selected {
-    -fx-background-color: #dbe7ff !important; /* bleu clair Apple */
+    -fx-background-color: #dce8ff !important;
     -fx-text-fill: #000 !important;
 }
 
 .table-cell:selected {
-    -fx-text-fill: #000 !important; /* texte noir quand sélectionné */
+    -fx-text-fill: #000 !important;
 }
+
+.root.dark .table-row-cell:selected {
+    -fx-background-color: #1d4ed8 !important;
+    -fx-text-fill: #f9fafb !important;
+}
+
+.root.dark .table-cell:selected {
+    -fx-text-fill: #f9fafb !important;
+}
+
+/* Colonnes alignées à droite pour les prix / quantités */
+.table-cell.numeric {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+/* ------------------------------
+   STOCK COLOR CODING
+--------------------------------*/
+.stock-low {
+    -fx-text-fill: #dc2626; /* rouge vif */
+    -fx-font-weight: bold;
+}
+
+.stock-medium {
+    -fx-text-fill: #ea580c; /* orange intense */
+    -fx-font-weight: bold;
+}
+
+.stock-good {
+    -fx-text-fill: #15803d; /* vert moderne */
+    -fx-font-weight: bold;
+}
+
+/* Promo price */
+.discounted-price {
+    -fx-text-fill: #1d4ed8;
+    -fx-font-weight: bold;
+}
+
+/* ------------------------------
+   FORM CONTAINERS (Product form)
+--------------------------------*/
+/* Ex: VBox/HBox avec styleClass="form-section" dans ProductFormView.fxml */
+.form-section {
+    -fx-padding: 16;
+    -fx-spacing: 10;
+}
+
+.form-section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.root.dark .form-section-title {
+    -fx-text-fill: #e5e7eb;
+}
+
+/* Séparation douce */
+.separator {
+    -fx-background-color: #e5e7eb;
+}
+
+.root.dark .separator {
+    -fx-background-color: #1f2937;
+}
+
+/* ------------------------------
+   TABS (si tu utilises TabPane)
+--------------------------------*/
+.tab-pane {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 8 0;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-padding: 6 12;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #2563eb transparent;
+}
+
+.root.dark .tab-pane .tab:selected {
+    -fx-background-color: #020617;
+    -fx-border-color: transparent transparent #2563eb transparent;
+}
+
+.tab-pane .tab-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
+}
+
+.root.dark .tab-pane .tab-label {
+    -fx-text-fill: #9ca3af;
+}
+
+.root.dark .tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #e5e7eb;
+}
+
+/* Lignes normales */
+.table-row-cell {
+    -fx-background-color: #ffffff !important;   /* blanc lisible */
+    -fx-text-fill: #1e1e1e !important;          /* texte foncé */
+}
+
+/* Lignes impaires */
+.table-row-cell:odd {
+    -fx-background-color: #f3f4f6 !important;   /* gris léger */
+}
+
+/* Lignes au survol */
+.table-row-cell:hover {
+    -fx-background-color: #e2ecff !important;    /* bleu clair */
+}
+
+/* Ligne sélectionnée */
+.table-row-cell:selected {
+    -fx-background-color: #c9dcff !important;
+    -fx-text-fill: #000 !important;
+}
+
+.table-cell:selected {
+    -fx-text-fill: #000 !important;
+}
+
+/* Header plus lisible */
+.table-view .column-header .label {
+    -fx-text-fill: #111 !important;
+}
+
+
+/* ===========================================
+   FIX GLOBAL — FORCER TEXTE NOIR DANS TABLEVIEW
+=========================================== */
+
+.table-view .table-cell {
+    -fx-text-fill: #000000 !important;  /* texte noir */
+    -fx-font-weight: normal;
+}
+
+.table-view .table-row-cell {
+    -fx-text-fill: #000000 !important;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #000000 !important;
+}
+
+/* Sélection */
+.table-cell:selected {
+    -fx-text-fill: #000000 !important;
+}
+
+.table-row-cell:selected {
+    -fx-text-fill: #000000 !important;
+}
+
+/* Lignes */
+.table-row-cell:odd {
+    -fx-background-color: #f5f5f5 !important;
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff !important;
+}
+
+.table-view .table-cell {
+    -fx-padding: 0 0 0 15px !important;
+}
+
+
+/* =======================================================
+   DARK MODE — Se déclenche quand root.getStyleClass().add("dark")
+======================================================= */
+
+/* Fond global */
+.root.dark {
+    -fx-background-color: #1a1c1f;
+}
+
+/* Labels */
+.root.dark .label {
+    -fx-text-fill: #f2f2f2;
+}
+
+.root.dark .label.title {
+    -fx-text-fill: #ffffff;
+}
+
+.root.dark .label.muted {
+    -fx-text-fill: #b9b9b9;
+}
+
+/* Boutons */
+.root.dark .button {
+    -fx-background-color: #2a2d31;
+    -fx-border-color: #3a3d42;
+    -fx-text-fill: #e8e8e8;
+    -fx-effect: none;
+}
+
+.root.dark .button:hover {
+    -fx-background-color: #35383d;
+}
+
+.root.dark .button:pressed {
+    -fx-background-color: #2c2f33;
+}
+
+/* Delete button */
+.root.dark .button.delete {
+    -fx-background-color: #4a1c1c;
+    -fx-border-color: #b63a3a;
+    -fx-text-fill: #ffd6d6;
+}
+
+.root.dark .button.delete:hover {
+    -fx-background-color: #5a2121;
+}
+
+/* ------------------------------
+   TABLEVIEW DARK
+--------------------------------*/
+.root.dark .table-view {
+    -fx-background-color: #242629;
+    -fx-border-color: #3a3d42;
+}
+
+/* Header */
+.root.dark .table-view .column-header-background {
+    -fx-background-color: #2e3034;
+}
+
+.root.dark .table-view .column-header .label {
+    -fx-text-fill: #e5e7eb !important;
+}
+
+/* Cellules */
+.root.dark .table-view .table-cell {
+    -fx-background-color: #242629 !important;
+    -fx-text-fill: #f0f0f0 !important;
+}
+
+/* Lignes impaires */
+.root.dark .table-row-cell:odd {
+    -fx-background-color: #2b2d30 !important;
+}
+
+/* Hover */
+.root.dark .table-row-cell:hover {
+    -fx-background-color: #38404a !important;
+}
+
+/* Sélection */
+.root.dark .table-row-cell:selected {
+    -fx-background-color: #4c5a6e !important;
+    -fx-text-fill: #ffffff !important;
+}
+
+.root.dark .table-cell:selected {
+    -fx-text-fill: #ffffff !important;
+}
+
+/* ------------------------------
+   TextField / Input
+--------------------------------*/
+.root.dark .text-field,
+.root.dark .combo-box-base,
+.root.dark .text-area,
+.root.dark .spinner {
+    -fx-background-color: #2a2d31;
+    -fx-border-color: #3a3d42;
+    -fx-text-fill: #f0f0f0;
+}
+
+.root.dark .text-field:focused,
+.root.dark .combo-box-base:focused,
+.root.dark .text-area:focused,
+.root.dark .spinner:focused {
+    -fx-border-color: #4f80ff;
+}
+
+/* Placeholder text */
+.root.dark .text-field .text {
+    -fx-fill: #bbbbbb;
+}
+
+/* ------------------------------
+   Cards / Panels
+--------------------------------*/
+.root.dark .card {
+    -fx-background-color: #242629;
+    -fx-border-color: #3a3d42;
+}
+
+/* ------------------------------
+   Stock Colors (dark friendly)
+--------------------------------*/
+.root.dark .stock-low {
+    -fx-text-fill: #ff7070;
+}
+
+.root.dark .stock-medium {
+    -fx-text-fill: #ffb366;
+}
+
+.root.dark .stock-good {
+    -fx-text-fill: #66e28a;
+}
+
+.root.dark .discounted-price {
+    -fx-text-fill: #78a8ff;
+}
+
+
+/* ============================
+   HOME PAGE
+============================ */
+
+.welcome-title {
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+}
+
+.welcome-subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #555;
+}
+
+.welcome-card {
+    -fx-padding: 20;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #d8d8d8;
+    -fx-spacing: 6;
+    -fx-pref-width: 180;
+    -fx-alignment: CENTER;
+}
+
+.card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222;
+}
+
+.card-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666;
+}
+
+.welcome-button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+}
+
+.welcome-button:hover {
+    -fx-background-color: #2563eb;
+}
+
+
+/* ============================
+   FINANCIAL SUMMARY
+============================ */
+
+.finance-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1d1d1d;
+}
+
+.finance-card {
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-background-color: white;
+    -fx-border-color: #d1d1d1;
+    -fx-pref-width: 180;
+    -fx-spacing: 8;
+}
+
+.finance-card-title {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.finance-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222;
+}
+
+.finance-total-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111;
+}
+
+.finance-total-value {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0d6efd;
+}
+
+/* ============================
+   BETTER WELCOME BUTTON
+============================ */
+
+.welcome-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333;
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #cfcfcf;
+    -fx-padding: 10 25;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 3);
+    -fx-cursor: hand;
+}
+
+.welcome-button:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.welcome-button:pressed {
+    -fx-background-color: #e8e8e8;
+}
+
+.finance-total-value {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+
+}
+
+
+.finance-card {
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 8, 0, 0, 2);
+
+    -fx-pref-width: 180;
+    -fx-spacing: 8;
+}
+
+/* ============================
+   TITLES – Premium UI
+============================ */
+
+.page-title {
+    -fx-font-family: "Segoe UI Semibold", "Helvetica Neue", Arial;
+    -fx-font-size: 32px;
+    -fx-text-fill: #1a1a1a;
+    -fx-font-weight: 600;
+
+    /* spacing subtil */
+    -fx-padding: 0 0 10 0;
+}
+
+.page-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6a6a6a;
+}
+
+

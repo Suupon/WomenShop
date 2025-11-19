@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+
+      alignment="CENTER"
+      spacing="30"
+      style="-fx-padding: 40;">
+
+
+    <Label text="Welcome to WomenShop" styleClass="welcome-title"/>
+
+    <Label text="Manage products, track inventory and monitor financial performance."
+           styleClass="welcome-subtitle"/>
+
+    <HBox spacing="20" alignment="CENTER">
+
+        <!-- PRODUCTS -->
+        <VBox styleClass="welcome-card"
+              style="-fx-cursor: hand;"
+              onMouseClicked="#goToProducts">
+            <Label text="Products" styleClass="card-title"/>
+            <Label text="All categories" styleClass="card-subtitle"/>
+        </VBox>
+
+        <!-- INVENTORY -->
+        <VBox styleClass="welcome-card"
+              style="-fx-cursor: hand;"
+              onMouseClicked="#goToInventory">
+            <Label text="Inventory" styleClass="card-title"/>
+            <Label text="Track stock levels" styleClass="card-subtitle"/>
+        </VBox>
+
+        <!-- FINANCES -->
+        <VBox styleClass="welcome-card"
+              style="-fx-cursor: hand;"
+              onMouseClicked="#goToFinances">
+            <Label text="Finances" styleClass="card-title"/>
+            <Label text="Overview of performance" styleClass="card-subtitle"/>
+        </VBox>
+
+    </HBox>
+
+    <Button text="Go to Products"
+            onAction="#goToProducts"
+            styleClass="welcome-button"/>
+
+</VBox>
